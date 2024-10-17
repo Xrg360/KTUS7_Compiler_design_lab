@@ -1,5 +1,3 @@
-## README.md for Lexical Analyzer using Lex
-
 ### Overview
 
 This is a simple lexical analyzer implemented using **Lex** (Flex) for analyzing C-like code. It identifies and categorizes tokens like keywords, identifiers, operators, and preprocessor directives from a given input file. Additionally, it handles comments by skipping them and outputs the token categories in a structured format.
