@@ -1,35 +1,64 @@
 %{
-int line_count = 0;
-int word_count = 0;
+int COMMENT = 0;
 %}
 
 identifier [a-zA-Z][a-zA-Z0-9]*
 
 %%
-\n              { line_count++; }   // Increment line count for each newline
+#.*               { printf("\n%s is a preprocessor directive", yytext); }
+"int" |
+"float" |
+"char" |
+"double" |
+"while" |
+"for" |
+"struct" |
+"typedef" |
+"do" |
+"if" |
+"break" |
+"continue" |
+"void" |
+"switch" |
+"return" |
+"else" |
+"goto"         { if (!COMMENT) printf(" kwd"); }
 
-{identifier}    { word_count++; }   // Increment word count for each identifier
-[0-9]+          { word_count++; }   // Increment word count for each number
+"/*"            { COMMENT = 1; printf(" comment starts"); }
+"*/"            { COMMENT = 0; printf(" comment ends"); }
 
-[ \t]+          { /* Ignore whitespace */ }
-.               { /* Ignore everything else */ }
+"+"             { if (!COMMENT) printf(" op-plus"); }
+"-"             { if (!COMMENT) printf(" op-sub"); }
+"*"             { if (!COMMENT) printf(" op-mul"); }
+"/"             { if (!COMMENT) printf(" op-div"); }
 
+{identifier}\(  { if (!COMMENT) printf(" fun"); }
+"{"             { if (!COMMENT) printf(" block begins"); }
+"}"             { if (!COMMENT) printf(" block ends"); }
+{identifier}(\[[0-9]*\])? { if (!COMMENT) printf(" id"); }
+
+\".*\"          { if (!COMMENT) printf(" str"); }
+[0-9]+          { if (!COMMENT) printf(" num"); }
+
+"="             { if (!COMMENT) printf(" op-equ"); }
+"<=" |
+">=" |
+"<" |
+"==" |
+">"             { if (!COMMENT) printf(" rel-op"); }
+
+.               { if (!COMMENT) ECHO; }
 %%
 
 int main(int argc, char **argv) {
-    FILE *file = fopen("input.txt", "r");  // Open text file
+    FILE *file = fopen("input.c", "r");
     if (!file) {
         printf("Could not open the file\n");
         return 1;
     }
     yyin = file;
-    yylex();  // Start lexical analysis
+    yylex();
     fclose(file);
-
-    // Print the final counts
-    printf("Number of lines: %d\n", line_count);
-    printf("Number of words: %d\n", word_count);
-
     return 0;
 }
 
