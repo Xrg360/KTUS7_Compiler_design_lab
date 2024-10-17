@@ -1,113 +1,116 @@
-#include<stdio.h>
-#include<stdlib.h>
-struct node
-{
-        int st;
-        struct node *link;
-};
+#include <stdio.h>
+#include <stdlib.h>
 
-void findclosure(int,int);
-void insert_trantbl(int ,char, int);
-int findalpha(char);
-void print_e_closure(int);
+#define MAX_STATES 20
+#define MAX_ALPHA 20
 
-static int set[20],nostate,noalpha,s,notransition,c,r,buffer[20];
-char alphabet[20];
-static int e_closure[20][20]={0};
-struct node * transition[20][20]={NULL};
+typedef struct {
+    int *transitions[MAX_ALPHA];  
+    int e_transitions[MAX_STATES]; 
+    int e_count;                  
+} State;
 
-void main()
-{
-        int i,j,k,m,t,n;
-        struct node *temp;
-        printf("Enter the number of alphabets?\n");
- scanf("%d",&noalpha);
-        getchar();
-        printf("NOTE:- [ use letter e as epsilon]\n");
-        printf("NOTE:- [e must be last character ,if it is present]\n");
-        printf("\nEnter alphabets?\n");
-        for(i=0;i<noalpha;i++)
-        {
-                alphabet[i]=getchar();
-                getchar();
-        }
-        printf("\nEnter the number of states?\n");
-        scanf("%d",&nostate);
-        printf("\nEnter no of transition?\n");
-        scanf("%d",&notransition);
-        printf("NOTE:- [Transition is in the form–> qno alphabet qno]\n",notransition);
-        printf("NOTE:- [States number must be greater than zero]\n");
-        printf("\nEnter transition?\n");
-        for(i=0;i<notransition;i++)
-        {
-                scanf("%d %c%d",&r,&c,&s);
-                insert_trantbl(r,c,s);
-        }
- printf("\n");
-        printf("e-closure of states……\n");
-        printf("—————————–\n");
-        for(i=1;i<=nostate;i++)
-        {
-                c=0;
-                for(j=0;j<20;j++)
-                {
-                        buffer[j]=0;
-                        e_closure[i][j]=0;
-                }
-                findclosure(i,i);
-                printf("\ne-closure(q%d): ",i);
-                print_e_closure(i);
-        }
+State states[MAX_STATES];  
+int e_closure[MAX_STATES][MAX_STATES]; 
+char alphabet[MAX_ALPHA];
+int noalpha, nostate, notransition;
+
+void insert_transition(int from, char symbol, int to);
+void find_e_closure(int state);
+void print_e_closure(int state);
+
+int main() {
+    int i, from, to;
+    char symbol;
+    
+    printf("Enter the number of alphabets?\n");
+    scanf("%d", &noalpha);
+    
+    printf("Enter the alphabets (use 'e' for epsilon):\n");
+    for (i = 0; i < noalpha; i++) {
+        scanf(" %c", &alphabet[i]);
+    }
+
+    printf("Enter the number of states?\n");
+    scanf("%d", &nostate);
+
+    printf("Enter the number of transitions?\n");
+    scanf("%d", &notransition);
+
+    printf("Enter the transitions (format: from symbol to):\n");
+    for (i = 0; i < notransition; i++) {
+        scanf("%d %c %d", &from, &symbol, &to);
+        insert_transition(from, symbol, to);
+    }
+
+    printf("\nEpsilon-closures of states:\n");
+    for (i = 0; i < nostate; i++) {
+        find_e_closure(i);
+        print_e_closure(i);
+    }
+
+    return 0;
 }
 
-void findclosure(int x,int sta)
-{
-        struct node *temp;
-        int i;
-        if(buffer[x])
-                return;
-e_closure[sta][c++]=x;
-        buffer[x]=1;
-        if(alphabet[noalpha-1]=='e' && transition[x][noalpha-1]!=NULL)
-        {
-                temp=transition[x][noalpha-1];
-                while(temp!=NULL)
-                {
-                        findclosure(temp->st,sta);
-                        temp=temp->link;
-                }
+// Inserts a transition into the transition table
+void insert_transition(int from, char symbol, int to) {
+    int idx = -1;
+    
+    if (symbol == 'e') {
+        // Epsilon transition
+        states[from].e_transitions[states[from].e_count++] = to;
+    } else {
+        // Non-epsilon transition
+        for (int i = 0; i < noalpha; i++) {
+            if (alphabet[i] == symbol) {
+                idx = i;
+                break;
+            }
         }
+
+        if (idx == -1) {
+            printf("Invalid symbol: %c\n", symbol);
+            exit(1);
+        }
+        
+        if (states[from].transitions[idx] == NULL) {
+            states[from].transitions[idx] = malloc(MAX_STATES * sizeof(int));
+        }
+        
+        states[from].transitions[idx][to] = 1;  // Mark transition
+    }
 }
 
-void insert_trantbl(int r,char c,int s)
-{
-        int j;
-        struct node *temp;
-        j=findalpha(c);
-        if(j==999)
-        {
-                printf("error\n");
-                exit(0);
+// Find epsilon-closure for a given state
+void find_e_closure(int state) {
+    static int visited[MAX_STATES];
+    
+    if (visited[state]) return; 
+
+    visited[state] = 1;
+    e_closure[state][state] = 1;  
+    
+    for (int i = 0; i < states[state].e_count; i++) {
+        int next_state = states[state].e_transitions[i];
+        find_e_closure(next_state);
+        
+        for (int j = 0; j < nostate; j++) {
+            if (e_closure[next_state][j]) {
+                e_closure[state][j] = 1;
+            }
         }
- temp=(struct node *)malloc(sizeof(struct node));
-        temp->st=s;
-        temp->link=transition[r][j];
-        transition[r][j]=temp;
+    }
 }
 
-int findalpha(char c)
-{
-        int i;
-        for(i=0;i<noalpha;i++)
-        if(alphabet[i]==c)
-                return i;
-        return(999);
-}
-void print_e_closure(int i)
-{
-        int j;
-        printf("{");
-        for(j=0;e_closure[i][j]!=0;j++)
-        printf("q%d,",e_closure[i][j]);
-        printf("}");
+// Print epsilon-closure for a given state
+void print_e_closure(int state) {
+    printf("Epsilon-closure of q%d: {", state);
+    
+    for (int i = 0; i < nostate; i++) {
+        if (e_closure[state][i]) {
+            printf("q%d, ", i);
+        }
+    }
+    
+    printf("}\n");
 }
