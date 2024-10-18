@@ -1,0 +1,13 @@
+PS C:\Users\xrg\OneDrive\Desktop\sample> .\a.exe
+Enter the no of prooductions:
+5
+Enter the productions:
+S=AbCd
+A=Cf
+A=a
+C=gE
+E=h
+Enter the elemets whose fisrt & follow is to be found:S
+First(S)={ga}
+Follow(S)={$}
+Continue(0/1)?0
