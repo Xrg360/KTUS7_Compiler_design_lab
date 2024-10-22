@@ -1,0 +1,9 @@
+Enter the number of productions: 3
+Enter 3 productions:
+b=3
+d=1+b
+c=b+c
+
+Optimized code:
+d=4
+c=b+c
