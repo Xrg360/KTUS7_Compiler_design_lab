@@ -1,0 +1,4 @@
+Enter Any Arithmetic Expression:
+6+2
+
+Result=8
