@@ -1,0 +1,15 @@
+Enter the number of productions: 8
+
+Enter the productions:
+E=TX
+X=+TX
+X=$
+T=FY
+Y=*FY
+Y=$
+F=a
+F=bEb
+Enter the element whose first and follow is to be found: E
+First(E) => {a,b,}
+Follow(E) => {$,b,}
+Continue(1/0) : 0

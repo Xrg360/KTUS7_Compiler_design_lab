@@ -1,0 +1,11 @@
+
+#include<stdio.h> is a preprocessor directive
+
+#include<stdlib.h> is a preprocessor directive
+ kwd  fun)
+ block begins
+     kwd  id, id;
+     fun str);
+     fun str,& id,& id);
+     fun str, id, id, id op-plus id);
+ block ends
