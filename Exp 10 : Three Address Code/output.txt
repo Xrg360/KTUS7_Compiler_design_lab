@@ -1,0 +1,7 @@
+Enter an arithmetic expression: 6+4*3+2
+
+Generated Three Address Code:
+----------------------------
+t1 := 4 * 3
+t2 := 6 + t1
+t3 := t2 + 2

@@ -1,0 +1,46 @@
+Enter the no.of terminals :
+4
+
+Enter the terminals :
++*i$
+
+Enter the table values :
+Enter the value for + +:>
+Enter the value for + *:<
+Enter the value for + i:<
+Enter the value for + $:>
+Enter the value for * +:>
+Enter the value for * *:>
+Enter the value for * i:<
+Enter the value for * $:>
+Enter the value for i +:>
+Enter the value for i *:>
+Enter the value for i i:=
+Enter the value for i $:>
+Enter the value for $ +:<
+Enter the value for $ *:<
+Enter the value for $ i:<
+Enter the value for $ $:A
+
+**** OPERATOR PRECEDENCE TABLE ****
+        +       *       i       $
+
++       >       <       <       >
+*       >       >       <       >
+i       >       >       =       >
+$       <       <       <       A
+Enter the input string:i+i*i$
+
+STACK                   INPUT STRING                    ACTION
+
+$                       i+i*i$                  Shift i
+$<i                     +i*i$                   Reduce
+$                       +i*i$                   Shift +
+$<+                     i*i$                    Shift i
+$<+<i                   *i$                     Reduce
+$<+                     *i$                     Shift *
+$<+<*                   i$                      Shift i
+$<+<*<i                 $                       Reduce
+$<+<*                   $                       Reduce
+$<+                     $                       Reduce
+$                       $                       String is accepted

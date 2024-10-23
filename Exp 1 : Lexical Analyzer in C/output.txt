@@ -1,0 +1,5 @@
+kwd id , id , id ; id op-equ id op-plus id ; 
+Counts:
+Keywords: 1
+Identifiers: 6
+Operators: 6

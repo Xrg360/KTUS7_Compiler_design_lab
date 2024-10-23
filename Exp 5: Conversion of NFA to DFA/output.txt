@@ -1,0 +1,49 @@
+Enter the number of alphabets?
+NOTE:- [ use letter e as epsilon]
+NOTE:- [e must be last character ,if it is present]
+
+Enter alphabets?
+2
+a b              
+Enter the number of states?
+3
+Enter the start state?
+1
+Enter the number of final states?
+1
+Enter the final states?
+3
+Enter no of transition?
+4
+NOTE:- [Transition is in the format qno alphabet qno 4
+NOTE:- [States number must be greater than zero]
+
+Enter transition?
+1 a 1 
+1 b 1 
+1 a 2
+2 b 3
+
+Equivalent DFA............................
+Transitions of DFA
+
+{q1,}           a       {q1,q2,}
+
+{q1,}           b       {q1,}
+
+{q1,q2,}        a       {q1,q2,}
+
+{q1,q2,}        b       {q1,q3,}
+
+{q1,q3,}        a       {q1,q2,}
+
+{q1,q3,}        b       {q1,}
+
+States of DFA:
+{q1,}   {q1,q2,}        {q1,q3,}
+ Alphabets:
+a       b
+ Start State:
+q1
+Final states:
+{q1,q3,}
