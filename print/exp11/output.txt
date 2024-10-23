@@ -1,0 +1,13 @@
+Enter an arithmetic expression (or 'quit' to exit):
+> 5+5*6
+
+Expression: 5+5*6
+
+Quadruple Address Code:
+No.  Op       Arg1     Arg2     Result  
+----------------------------------------
+0    *        5        6        t1      
+1    +        5        t1       t2      
+
+Enter an arithmetic expression (or 'quit' to exit):
+(Supported operators: +, -, *, /, ^)
