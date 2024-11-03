@@ -5,24 +5,9 @@ int COMMENT = 0;
 identifier [a-zA-Z][a-zA-Z0-9]*
 
 %%
-#.*               { printf("\n%s is a preprocessor directive", yytext); }
-"int" |
-"float" |
-"char" |
-"double" |
-"while" |
-"for" |
-"struct" |
-"typedef" |
-"do" |
-"if" |
-"break" |
-"continue" |
-"void" |
-"switch" |
-"return" |
-"else" |
-"goto"         { if (!COMMENT) printf(" kwd"); }
+#.*                                                                                 { printf("\n%s is a preprocessor directive", yytext); }
+"int" |"float" |"char" |"double" |"while" |"for" |"struct" |"typedef" |
+"do" |"if" |"break" |"continue" |"void" |"switch" |"return" |"else" |"goto"         { if (!COMMENT) printf(" kwd"); }
 
 "/*"            { COMMENT = 1; printf(" comment starts"); }
 "*/"            { COMMENT = 0; printf(" comment ends"); }

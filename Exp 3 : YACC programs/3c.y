@@ -4,8 +4,6 @@
 
     int flag=0;
 
-   
-
 %}
 
 %token NUMBER
@@ -28,7 +26,7 @@ ArithmeticExpression: E{
 
         };
 
-E:E'+'E {$$=$1+$3;}
+E:E '+' E {$$=$1+$3;}
 
  |E'-'E {$$=$1-$3;}
 
@@ -73,3 +71,5 @@ void yyerror()
    flag=1;
 
 }
+
+
