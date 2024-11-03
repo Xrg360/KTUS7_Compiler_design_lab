@@ -1,0 +1,6 @@
+give this input in console :
+
+Enter three address code (empty line to end):
+a = b
+a = op b 
+a = b op c
