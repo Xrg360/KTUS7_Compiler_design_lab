@@ -23,6 +23,7 @@ int main(){
                 printf("Enter the element whose first and follow is to be found: ");
                 scanf("%c",&c);
                 first(c);
+                
                 printf("First(%c) => {",c);
                 for(i=0;i<m;i++)
                         printf("%c,",f[i]);
