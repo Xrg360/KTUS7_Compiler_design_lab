@@ -6,11 +6,10 @@
 #define MAX_EXPR 100
 #define MAX_STACK 100
 
-// Structure to store operands or temporary results
 struct Operand {
     int value;
-    char name[10];  // To store either number or temporary variable name
-    int isTemp;     // Flag to indicate if it's a temporary variable
+    char name[10];  
+    int isTemp;    
 };
 
 int isOperator(char c) {
